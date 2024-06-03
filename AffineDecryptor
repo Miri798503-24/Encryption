@@ -1,0 +1,35 @@
+def modular_inverse(a, m):
+    # Function to find the modular inverse of a under modulo m
+    for x in range(1, m):
+        if (a * x) % m == 1:
+            return x
+    raise ValueError(f"No modular inverse found for a = {a} under modulo m = {m}")
+
+
+def affine_decrypt(ciphertext, a, b, m=26):
+    a_inv = modular_inverse(a, m)  # Find the modular inverse of a
+    plaintext = ""
+
+    for char in ciphertext:
+        if char.isalpha():
+            x = ord(char.lower()) - ord('a')  # Convert char to number
+            decrypted_char = (a_inv * (x - b)) % m
+            plaintext_char = chr(decrypted_char + ord('a'))
+            # Preserve the case of the character
+            if char.isupper():
+                plaintext_char = plaintext_char.upper()
+            plaintext += plaintext_char
+        else:
+            plaintext += char  # Non-alphabetic characters are added unchanged
+
+    return plaintext
+
+
+# Example usage
+ciphertext = "JMIFMZIS"
+a = 21  # Example value of 'a'
+b = 12  # Example value of 'b'
+
+# Decrypt the message
+plaintext = affine_decrypt(ciphertext, a, b)
+print("Decrypted message:", plaintext)
