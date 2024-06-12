@@ -1,0 +1,37 @@
+def char_to_value(char):
+    if char.isalpha():
+        # Convert character to lowercase
+        char = char.lower()
+        # Map 'a' to 0, 'b' to 1, ..., 'z' to 25
+        return ord(char) - ord('a')
+    elif char.isdigit():
+        # Directly convert digit character to integer
+        return int(char)
+    else:
+        # Return -1 for non-alphanumeric characters
+        return -1
+
+def value_to_char(value):
+    if 0 <= value <= 25:
+        # Map 0 to 'a', 1 to 'b', ..., 25 to 'z'
+        return chr(value + ord('a'))
+    else:
+        # Return '?' for values out of range
+        return '?'
+
+def process_input(input_str):
+    parts = input_str.split()
+    values = []
+    for part in parts:
+        if part.isdigit():  # Handle space-separated numbers
+            num = int(part)
+            values.append(value_to_char(num))
+        else:
+            for char in part:  # Handle individual characters
+                values.append(char_to_value(char))
+    return values
+
+# Example usage
+input_str = "char"
+values = process_input(input_str)
+print(values)
