@@ -1,0 +1,28 @@
+def gcd(a, b):
+    while b:
+        a, b = b, a % b
+    return a
+
+def phi(n):
+    result = n
+    p = 2
+    while p * p <= n:
+        if n % p == 0:
+            while n % p == 0:
+                n //= p
+            result -= result // p
+        p += 1
+    if n > 1:
+        result -= result // n
+    return result
+
+def affine_ciphers_count(n):
+    phi_n = phi(n)
+    return phi_n * n-1
+
+if __name__ == "__main__":
+    N = int(input("Enter the value of N: "))
+    result1 = phi(N)
+    result2 = affine_ciphers_count(N)
+    print(f"phi of  {N} is: {result1}")
+    print(f"The number of non-trivial affine ciphers in modulo {N} is: {result2}")
